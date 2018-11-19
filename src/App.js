@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Tone from 'tone';
 
 class App extends Component {
+
+  componentDidMount(){
+    console.log('hello');
+    const synth = new Tone.Synth().toMaster();
+    synth.triggerAttackRelease('C4', '8n');
+  }
+
   render() {
     return (
       <div className="App">
