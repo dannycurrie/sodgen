@@ -1,4 +1,4 @@
-import { PLAY_SOUND, PLAY_SOUNDS } from '../actions';
+import { PLAY_SOUNDS } from '../actions';
 
 const initialState = [
   // define the notes we want to play here
@@ -13,11 +13,6 @@ const initialState = [
   { id: '8', play: false, note: 'G6' },
 ];
 
-const playSound = id => state => state.map(
-  s => (s.id === id
-    ? { ...s, play: true }
-    : { ...s, play: false }),
-);
 const playSounds = ids => state => state.map(
   s => (ids.includes(s.id)
     ? { ...s, play: true }
@@ -26,8 +21,6 @@ const playSounds = ids => state => state.map(
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case PLAY_SOUND:
-      return playSound(action.id)(state);
     case PLAY_SOUNDS:
       return playSounds(action.ids)(state);
     default:
