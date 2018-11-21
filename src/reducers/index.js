@@ -1,3 +1,5 @@
 import sound from './sound';
 
-export const createReducer = () => sound;
+const createReducer = () => sound;
+
+export default createReducer;

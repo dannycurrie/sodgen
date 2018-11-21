@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import { Provider } from 'react-redux';
+import App from './App';
 import configureStore from './configureStore';
 import SoundEngine from './SoundEngine';
 
@@ -11,8 +10,8 @@ const engine = SoundEngine(store);
 engine.init();
 
 ReactDOM.render(
-    <Provider store={store}>
+  <Provider store={store}>
     <App />
-</Provider>
-, document.getElementById('root'));
-
+  </Provider>,
+  document.getElementById('root'),
+);

@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SoundContainer from './components/SoundContainer';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <SoundContainer />
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App">
+    <SoundContainer />
+  </div>
+);
 
 export default App;
