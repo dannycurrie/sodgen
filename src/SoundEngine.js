@@ -11,7 +11,7 @@ export default (store) => {
     const id1 = () => Math.floor(Math.random() * store.getState().length).toString();
     const id2 = () => Math.floor(Math.random() * store.getState().length + 2).toString();
     const id3 = () => Math.floor(Math.random() * store.getState().length + 2).toString();
-    const timeout = Math.random() * 2000;
+    const timeout = Math.random() * 3000;
     const chord = [id1(), id2(), id3()];
 
     playSounds(chord);

@@ -6,8 +6,8 @@ const Sound = ({ sound: { play, note } }) => {
     // TODO: encapsulate this somewhere
     const feedbackDelay = new Tone.PingPongDelay({
       delayTime: '2n',
-      feedback: 0.6,
-      wet: 0.5,
+      feedback: 0.3,
+      wet: 0.3,
     }).toMaster();
     const synth = new Tone.PolySynth(6, Tone.Synth, {
       oscillator: {
