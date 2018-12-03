@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Tone from 'tone';
 
 const Sound = ({ sound: { play, note } }) => {
@@ -13,13 +14,20 @@ const Sound = ({ sound: { play, note } }) => {
       oscillator: {
         partials: [0, 2, 3, 4],
       },
-    }).toMaster().connect(feedbackDelay);
+    })
+      .toMaster()
+      .connect(feedbackDelay);
     synth.triggerAttackRelease(note, '8n');
   }
 
-  return (
-    <Fragment />
-  );
+  return <Fragment />;
+};
+
+Sound.propTypes = {
+  sound: PropTypes.shape({
+    play: PropTypes.bool.isRequired,
+    note: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Sound;

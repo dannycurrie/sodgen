@@ -8,15 +8,19 @@ class SoundContainer extends PureComponent {
     const { sounds } = this.props;
     return (
       <Fragment>
-        {sounds.map((sound => (
+        {sounds.map(sound => (
           <Fragment key={sound.id}>
             <Sound sound={sound} />
           </Fragment>
-        )))}
+        ))}
       </Fragment>
     );
   }
 }
+
+SoundContainer.propTypes = {
+  sounds: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStateToProps = state => ({
   sounds: state,
