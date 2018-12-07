@@ -1,3 +1,6 @@
+import {
+  equals, any, lensProp, assoc, complement,
+} from 'ramda';
 import { PLAY_SOUNDS } from '../actions';
 
 const initialState = [
@@ -13,11 +16,11 @@ const initialState = [
   { id: '8', play: false, note: 'G6' },
 ];
 
-const playSounds = ids => state => state.map(
-  s => (ids.includes(s.id)
-    ? { ...s, play: true }
-    : { ...s, play: false }),
-);
+const idMatch = ({ id }) => any(equals(id));
+const playTrue = s => assoc('play', true, s);
+const playFalse = s => assoc('play', false, s);
+
+const playSounds = ids => state => state.map(s => (idMatch(s)(ids) ? playTrue(s) : playFalse(s)));
 
 export default (state = initialState, action) => {
   switch (action.type) {
