@@ -1,6 +1,4 @@
-import {
-  equals, any, lensProp, assoc, complement,
-} from 'ramda';
+import { equals, any, assoc } from 'ramda';
 import { PLAY_SOUNDS } from '../actions';
 
 const initialState = [
