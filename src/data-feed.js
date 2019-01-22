@@ -17,7 +17,7 @@ export default (callback) => {
   };
 
   ws.onmessage = (e) => {
-    const value = JSON.parse(e.data);
+    const value = JSON.parse(e.data).last_size;
     callback(value);
   };
 };
