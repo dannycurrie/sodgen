@@ -21,6 +21,7 @@ export default (store) => {
   const playSounds = soundIds => store.dispatch(playSoundsAction(soundIds));
 
   const play = (data) => {
+    console.log(data);
     if (typeof data === 'undefined') return;
     dataStore.push(data);
     // take last 3 data values and create a chord from them
@@ -28,7 +29,7 @@ export default (store) => {
       R.toString,
       R.map(Math.floor),
       normalizeNotes,
-      R.takeLast(3),
+      R.takeLast(3)
     )(dataStore);
     playSounds(chord);
   };
