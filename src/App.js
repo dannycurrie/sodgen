@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Sound from './components/Sound';
+import WithTrigger from './components/WithTrigger';
 import { sounds } from './utils/sounds';
 
 const App = () => {
@@ -7,8 +8,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <Sound soundId={sounds.drone} />
-      <Sound soundId={sounds.synthline} />
+      <Sound soundId={sounds.drone} options={{ loop: true }} play />
+      <Sound soundId={sounds.synthline} options={{ loop: true }} play />
+      <WithTrigger />
     </div>
   );
 };

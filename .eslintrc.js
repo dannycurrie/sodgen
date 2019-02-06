@@ -7,6 +7,7 @@ const eslintConfig = {
   },
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
+    'react/forbid-prop-types': [],
     // Allow importing of devDependencies in specific contexts
     'import/no-extraneous-dependencies': [
       'error',

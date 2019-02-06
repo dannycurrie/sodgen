@@ -7,7 +7,7 @@ const getAudioContext = () => {
   return ctx;
 };
 
-export default (audioURL) => {
+export default (audioURL, opts = {}) => {
   const soundReq = new XMLHttpRequest();
   soundReq.open('GET', audioURL, true);
   soundReq.responseType = 'arraybuffer';
@@ -18,7 +18,9 @@ export default (audioURL) => {
       const audioBufferSource = context.createBufferSource();
       audioBufferSource.buffer = audioBuffer;
       audioBufferSource.connect(context.destination);
-      audioBufferSource.loop = true;
+      if (opts.loop) {
+        audioBufferSource.loop = true;
+      }
       audioBufferSource.start();
     });
   };
