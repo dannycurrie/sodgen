@@ -24,6 +24,6 @@ export const getSound = (soundId) => {
   if (soundId in sounds) {
     return `${soundsPath}/${soundId}.${soundFormat}`;
   }
-  console.error(`unrecognised sound ${soundId}`);
+  console.warn(`unrecognised sound ${soundId}`);
   return null;
 };

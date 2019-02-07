@@ -1,16 +1,19 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Sound from './Sound';
 
-const WithTrigger = ({ soundId }) => (
+const WithTrigger = ({ children, ...rest }) => (
   <Fragment>
-    <Sound soundId={soundId} play />
+    {React.Children.map(children, child => React.cloneElement(child, { ...rest, play: true }))}
   </Fragment>
 );
 
 WithTrigger.propTypes = {
-  soundId: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};
+
+WithTrigger.defaulProps = {
+  children: [],
 };
 
 const mapStateToProps = state => ({

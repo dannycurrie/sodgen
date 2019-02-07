@@ -10,7 +10,9 @@ const App = () => {
     <div className="App">
       <Sound soundId={sounds.drone} options={{ loop: true }} play />
       <Sound soundId={sounds.synthline} options={{ loop: true }} play />
-      <WithTrigger />
+      <WithTrigger>
+        <Sound soundId="" />
+      </WithTrigger>
     </div>
   );
 };
