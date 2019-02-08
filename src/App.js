@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Sound from './components/Sound';
+import SoundContainer from './components/SoundContainer';
 import WithTrigger from './components/WithTrigger';
 import { sounds } from './utils/sounds';
 
@@ -13,6 +14,7 @@ const App = () => {
       <WithTrigger>
         <Sound soundId="" />
       </WithTrigger>
+      <SoundContainer />
     </div>
   );
 };

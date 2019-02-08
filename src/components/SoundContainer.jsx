@@ -1,16 +1,16 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Sound from './Sound';
+import Note from './Note';
 
 class SoundContainer extends PureComponent {
   render() {
-    const { sounds } = this.props;
+    const { notes } = this.props;
     return (
       <Fragment>
-        {sounds.map(sound => (
-          <Fragment key={sound.id}>
-            <Sound sound={sound} />
+        {notes.map(note => (
+          <Fragment key={note.id}>
+            <Note note={note} />
           </Fragment>
         ))}
       </Fragment>
@@ -19,11 +19,11 @@ class SoundContainer extends PureComponent {
 }
 
 SoundContainer.propTypes = {
-  sounds: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => ({
-  sounds: state,
+  notes: state.notes,
 });
 
 export default connect(mapStateToProps)(SoundContainer);
