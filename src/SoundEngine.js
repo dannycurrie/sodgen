@@ -25,20 +25,24 @@ export default (store) => {
   const play = (data) => {
     console.log(data);
     if (typeof data === 'undefined') return;
-    // play random sound from triggerable sounds
-    const i = Math.floor(Math.random() * triggerableSounds.length);
-    playSound(sounds[triggerableSounds[i]]);
-
     // play chord from normailised data
     dataStore.push(data);
-    // take last 3 data values and create a chord from them
-    const chord = R.compose(
-      R.toString,
-      R.map(Math.floor),
-      normalizeNotes,
-      R.takeLast(3)
-    )(dataStore);
-    playChord(chord);
+
+    // randomly play either trigger sound or notes
+    if (Math.random() > 0.5) {
+      // play random sound from triggerable sounds
+      const i = Math.floor(Math.random() * triggerableSounds.length);
+      playSound(sounds[triggerableSounds[i]]);
+    } else {
+      // take last 3 data values and create a chord from them
+      const chord = R.compose(
+        R.toString,
+        R.map(Math.floor),
+        normalizeNotes,
+        R.takeLast(3)
+      )(dataStore);
+      playChord(chord);
+    }
   };
 
   const init = () => {

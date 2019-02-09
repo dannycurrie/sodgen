@@ -17,7 +17,7 @@ WithTrigger.defaulProps = {
 };
 
 const mapStateToProps = state => ({
-  soundId: state.soundId,
+  soundId: state.sound.soundId,
 });
 
 export default connect(mapStateToProps)(WithTrigger);
