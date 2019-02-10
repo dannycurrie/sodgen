@@ -14,31 +14,7 @@ const Background = styled.div`
   height: 100%;
   background-size: 200% 200%;
   background-image: linear-gradient(to right, #aa4b6b, #6b6b83, #3b8d99);
-  animation: Gradient 15s ease infinite;
-
-  @-webkit-keyframes Gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  @-moz-keyframes Gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
+  animation: Gradient 30s ease infinite;
 
   @keyframes Gradient {
     0% {
@@ -57,7 +33,7 @@ const App = () => {
   useEffect(() => {});
 
   return (
-    <Background className="App">
+    <Background className="App highlight">
       <Sound soundId={sounds.drone} options={{ loop: true }} play />
       <Sound soundId={sounds.synthline} options={{ loop: true }} play />
       <WithTrigger>

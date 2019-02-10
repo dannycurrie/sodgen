@@ -6560,6 +6560,11 @@ obuf@^1.0.0, obuf@^1.1.1:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
+octavian@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/octavian/-/octavian-2.2.0.tgz#d13018e46e5b28022727686c069ee61277f99b81"
+  integrity sha1-0TAY5G5bKAInJ2hsBp7mEnf5m4E=
+
 on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
