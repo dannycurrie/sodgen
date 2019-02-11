@@ -1,6 +1,6 @@
 import normalize from 'normalize-to-range';
 import * as R from 'ramda';
-import { playSound as playSoundAction, playChord as playChordAction } from './actions';
+import { playSound as playSoundAction, playNote as playNoteAction } from './actions';
 import { sounds } from './utils/sounds';
 import dataFeed from './data-feed';
 
@@ -19,7 +19,7 @@ export default (store) => {
   const max = store.getState().notes.length;
   const normalizeNotes = curriedNormalize(min, max);
   const playSound = soundId => store.dispatch(playSoundAction(soundId));
-  const playChord = noteIds => store.dispatch(playChordAction(noteIds));
+  const playNotes = noteIds => store.dispatch(playNoteAction(noteIds));
   const triggerableSounds = R.drop(2, R.keys(sounds));
 
   const play = (data) => {
@@ -34,14 +34,16 @@ export default (store) => {
       const i = Math.floor(Math.random() * triggerableSounds.length);
       playSound(sounds[triggerableSounds[i]]);
     } else {
-      // take last 3 data values and create a chord from them
-      const chord = R.compose(
-        R.toString,
-        R.map(Math.floor),
-        normalizeNotes,
-        R.takeLast(3)
-      )(dataStore);
-      playChord(chord);
+      // take last 5 data values normalise to get a note id
+      playNotes(
+        R.compose(
+          R.toString,
+          R.head,
+          R.map(Math.floor),
+          normalizeNotes,
+          R.takeLast(5)
+        )(dataStore)
+      );
     }
   };
 

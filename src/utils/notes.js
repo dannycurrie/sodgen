@@ -11,6 +11,7 @@ export const getSynth = () => {
     oscillator: {
       partials: [0, 2, 3, 4],
     },
+    volume: -12,
   })
     .toMaster()
     .connect(feedbackDelay);
@@ -19,9 +20,7 @@ export const getSynth = () => {
 export const getChord = (root) => {
   const note = new Octavian.Note(root);
 
-  const third = note.majorThird();
-  const fifth = note.perfectFifth();
-  const octave = note.perfectOctave();
+  const fourth = note.perfectFourth();
 
-  return [note.signature, third.signature, fifth.signature, octave.signature];
+  return [note.signature, fourth.signature];
 };

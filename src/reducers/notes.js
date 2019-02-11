@@ -1,5 +1,5 @@
 import { equals, any, assoc } from 'ramda';
-import { PLAY_CHORD } from '../actions';
+import { PLAY_NOTE } from '../actions';
 
 const initialState = [
   // define the notes we want to play here
@@ -22,7 +22,7 @@ const playNotes = ids => state => state.map(s => (idMatch(s)(ids) ? playTrue(s) 
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case PLAY_CHORD:
+    case PLAY_NOTE:
       return playNotes(action.ids)(state);
     default:
       return state;
