@@ -6,7 +6,7 @@ const Note = ({ note: { play, value } }) => {
   if (play) {
     const synth = getSynth();
     const chord = getChord(value);
-    synth.triggerAttackRelease(chord, '8n');
+    synth.triggerAttackRelease(chord, '4n');
   }
 
   return <Fragment />;
