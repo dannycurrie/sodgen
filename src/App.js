@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Sound from './components/Sound';
 import SoundContainer from './components/SoundContainer';
 import WithTrigger from './components/WithTrigger';
 import { sounds } from './utils/sounds';
+import Flicker from './components/Flicker';
 
 const Background = styled.div`
   top: 0;
@@ -13,7 +14,7 @@ const Background = styled.div`
   position: absolute;
   height: 100%;
   background-size: 200% 200%;
-  background-image: linear-gradient(to right, #aa4b6b, #6b6b83, #3b8d99);
+  background-image: linear-gradient(to right, #aa4b6bcc, #6b6b83cc, #3b8d99cc);
   animation: Gradient 30s ease infinite;
 
   @keyframes Gradient {
@@ -29,10 +30,20 @@ const Background = styled.div`
   }
 `;
 
-const App = () => {
-  useEffect(() => {});
+const Background2 = styled.div`
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: absolute;
+  height: 100%;
+`;
 
-  return (
+const App = () => (
+  <Fragment>
+    <Background2>
+      <Flicker />
+    </Background2>
     <Background className="App highlight">
       <Sound soundId={sounds.drone} options={{ loop: true }} play />
       <Sound soundId={sounds.synthline} options={{ loop: true }} play />
@@ -41,7 +52,7 @@ const App = () => {
       </WithTrigger>
       <SoundContainer />
     </Background>
-  );
-};
+  </Fragment>
+);
 
 export default App;
