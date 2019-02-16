@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Sound from './components/Sound';
-import SoundContainer from './components/SoundContainer';
+// import NoteContainer from './components/NoteContainer';
 import WithTrigger from './components/WithTrigger';
 import { sounds } from './utils/sounds';
 import Flicker from './components/Flicker';
@@ -44,13 +44,13 @@ const App = () => (
     <Background2>
       <Flicker />
     </Background2>
-    <Background className="App highlight">
+    <Background className="App">
       <Sound soundId={sounds.drone} options={{ loop: true }} play />
       <Sound soundId={sounds.synthline} options={{ loop: true }} play />
       <WithTrigger>
         <Sound soundId="" />
       </WithTrigger>
-      <SoundContainer />
+      {/* <NoteContainer /> */}
     </Background>
   </Fragment>
 );

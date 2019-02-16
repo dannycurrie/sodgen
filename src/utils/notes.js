@@ -20,15 +20,30 @@ const connectSynth = (effectsList, synth) => effectsList.reduce((s, effect) => {
   return s;
 }, synth);
 
-export const getSynth = () => connectSynth(
-  effects,
-  new Tone.PolySynth(6, Tone.Synth, {
-    oscillator: {
-      partials: [0, 2, 3, 4],
-    },
-    volume: -16,
-  }).toMaster()
-);
+const getSynthPreset = () => ({
+  harmonicity: 3.999,
+  oscillator: {
+    type: 'square',
+  },
+  envelope: {
+    attack: 0.03,
+    decay: 0.3,
+    sustain: 0.7,
+    release: 0.8,
+  },
+  modulation: {
+    volume: 12,
+    type: 'square6',
+  },
+  modulationEnvelope: {
+    attack: 2,
+    decay: 3,
+    sustain: 0.8,
+    release: 0.1,
+  },
+});
+
+export const getSynth = () => connectSynth(effects, new Tone.Synth(getSynthPreset()).toMaster());
 
 export const getChord = (root) => {
   const note = new Octavian.Note(root);

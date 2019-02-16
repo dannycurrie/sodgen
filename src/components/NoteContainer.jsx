@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Note from './Note';
 
-class SoundContainer extends PureComponent {
+class NoteContainer extends PureComponent {
   render() {
     const { notes } = this.props;
     return (
@@ -18,7 +18,7 @@ class SoundContainer extends PureComponent {
   }
 }
 
-SoundContainer.propTypes = {
+NoteContainer.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
@@ -26,4 +26,4 @@ const mapStateToProps = state => ({
   notes: state.notes,
 });
 
-export default connect(mapStateToProps)(SoundContainer);
+export default connect(mapStateToProps)(NoteContainer);
