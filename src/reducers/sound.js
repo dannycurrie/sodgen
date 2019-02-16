@@ -8,7 +8,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case PLAY_SOUND:
-      return R.assoc('soundId', action.id, state);
+      if (action.id) {
+        return R.assoc('soundId', action.id, state);
+      }
+      return { ...initialState };
+
     default:
       return state;
   }

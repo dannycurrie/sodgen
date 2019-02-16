@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const getAnimations = () => {
+import * as R from 'ramda';
+
+const getAnimation = (duration = 2) => `stretch ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2;`;
+
+const getAnimationDelays = () => {
   let result = '';
   for (let i = 0; i < 6; i += 1) {
     const r = Math.floor(Math.random() * 6);
@@ -36,26 +41,32 @@ const FlickerH1 = styled.h1`
   white-space: nowrap;
   color: whitesmoke;
   font-size: 200px;
+  animation: ${props => getAnimation(props.duration)};
 `;
 
 const FlickerSpan = styled.span`
   display: inline-block;
-  animation: stretch 2s cubic-bezier(0.4, 1.4, 0.75, 0.9) infinite;
   transform-origin: center;
 
-  ${getAnimations()}
+  ${getAnimationDelays()}
 `;
 
-const Flicker = () => (
+const renderFlickerSpan = () => <FlickerSpan>|</FlickerSpan>;
+
+const Flicker = props => (
   <FlickerWrapper>
-    <FlickerH1>
-      <FlickerSpan>|</FlickerSpan>
-      <FlickerSpan>|</FlickerSpan>
-      <FlickerSpan>|</FlickerSpan>
-      <FlickerSpan>|</FlickerSpan>
-      <FlickerSpan>|</FlickerSpan>
-    </FlickerH1>
+    {R.complement(R.isNil)(props.soundId) ? <FlickerH1>{renderFlickerSpan()}</FlickerH1> : null}
   </FlickerWrapper>
 );
+
+Flicker.propTypes = {
+  soundId: PropTypes.string,
+  duration: PropTypes.number,
+};
+
+Flicker.defaultProps = {
+  soundId: null,
+  duration: 2,
+};
 
 export default Flicker;

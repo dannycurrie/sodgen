@@ -42,7 +42,9 @@ const Background2 = styled.div`
 const App = () => (
   <Fragment>
     <Background2>
-      <Flicker />
+      <WithTrigger>
+        <Flicker />
+      </WithTrigger>
     </Background2>
     <Background className="App">
       <Sound soundId={sounds.drone} options={{ loop: true }} play />
