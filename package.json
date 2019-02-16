@@ -8,6 +8,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "expect": "^23.6.0",
+    "faker": "^4.1.0",
     "normalize-to-range": "^2.0.0",
     "octavian": "^2.2.0",
     "prettier": "^1.15.2",

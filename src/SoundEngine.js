@@ -45,7 +45,7 @@ export default (store) => {
         )(dataStore)
       );
     }
-    setTimeout(() => playSound(''), Math.random() * 1000);
+    setTimeout(() => playSound(''), Math.random() * 1500);
   };
 
   const init = () => {

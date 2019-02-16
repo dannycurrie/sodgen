@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 import * as R from 'ramda';
+import phrases from '../utils/words';
 
 const getAnimation = (duration = 2) => `stretch ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2;`;
 
@@ -14,6 +14,8 @@ const getAnimationDelays = () => {
   }
   return result;
 };
+
+// const getFontSize = () => Math.floor(Math.random() * 50);
 
 const FlickerWrapper = styled.div`
   font: 300 50px/1 Alegreya Sans, monospace;
@@ -40,7 +42,7 @@ const FlickerWrapper = styled.div`
 const FlickerH1 = styled.h1`
   white-space: nowrap;
   color: whitesmoke;
-  font-size: 200px;
+  font-size: 80px;
   animation: ${props => getAnimation(props.duration)};
 `;
 
@@ -51,7 +53,7 @@ const FlickerSpan = styled.span`
   ${getAnimationDelays()}
 `;
 
-const renderFlickerSpan = () => <FlickerSpan>|</FlickerSpan>;
+const renderFlickerSpan = () => <FlickerSpan>{phrases()}</FlickerSpan>;
 
 const Flicker = props => (
   <FlickerWrapper>
