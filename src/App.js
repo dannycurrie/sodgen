@@ -13,9 +13,9 @@ const Background = styled.div`
   left: 0;
   position: absolute;
   height: 100%;
-  background-size: 200% 200%;
-  background-image: linear-gradient(to right, #aa4b6bcc, #6b6b83cc, #3b8d99cc);
-  animation: Gradient 30s ease infinite;
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, #65999988, #f4791fcc);
+  animation: Gradient 1000s ease infinite;
 
   @keyframes Gradient {
     0% {
