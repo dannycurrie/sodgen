@@ -29,7 +29,7 @@ export default (store) => {
     dataStore.push(data);
 
     // randomly play either trigger sound or notes
-    if (Math.random() > 0.2) {
+    if (Math.random() > 0.4) {
       // play random sound from triggerable sounds
       const i = Math.floor(Math.random() * triggerableSounds.length);
       playSound(sounds[triggerableSounds[i]]);

@@ -1,49 +1,56 @@
 import Tone from 'tone';
 import Octavian from 'octavian';
 
-const feedbackDelay = new Tone.PingPongDelay({
-  delayTime: '2n',
-  feedback: 0.3,
+const feedbackDelay = new Tone.FeedbackDelay({
+  delayTime: '8n',
+  feedback: 0.6,
+}).toMaster();
+
+const freeverb = new Tone.Freeverb({
+  roomSize: 0.7,
+  dampening: 4300,
+}).toMaster();
+const jcr = new Tone.JCReverb({
+  roomSize: 0.5,
+}).toMaster();
+const dist = new Tone.Distortion({
+  distortion: 0.08,
   wet: 0.3,
 }).toMaster();
 
-const freeverb = new Tone.Freeverb().toMaster();
-freeverb.roomSize.value = 0.9;
-const jcr = new Tone.JCReverb(0.9).toMaster();
-const autoWah = new Tone.AutoWah(50, 6, -30).toMaster();
-// const cheby = new Tone.Chebyshev(50).toMaster();
-
-const effects = [feedbackDelay, freeverb, jcr, autoWah];
+const effects = [dist, feedbackDelay, freeverb, jcr];
 
 const connectSynth = (effectsList, synth) => effectsList.reduce((s, effect) => {
   s.connect(effect);
   return s;
 }, synth);
 
-const getSynthPreset = () => ({
-  harmonicity: 3.999,
-  oscillator: {
-    type: 'square',
-  },
-  envelope: {
-    attack: 0.03,
-    decay: 0.3,
-    sustain: 0.7,
-    release: 0.8,
-  },
-  modulation: {
-    volume: 12,
-    type: 'square6',
-  },
-  modulationEnvelope: {
-    attack: 2,
-    decay: 3,
-    sustain: 0.8,
-    release: 0.1,
-  },
-});
-
-export const getSynth = () => connectSynth(effects, new Tone.Synth(getSynthPreset()).toMaster());
+export const getSynth = () => connectSynth(
+  effects,
+  new Tone.PolySynth(6, Tone.Synth, {
+    harmonicity: 3.01,
+    modulationIndex: 14,
+    envelope: {
+      attack: 0.2,
+      decay: 0.3,
+      sustain: 0.1,
+      release: 1.2,
+    },
+    modulation: {
+      type: 'square',
+    },
+    modulationEnvelope: {
+      attack: 0.01,
+      decay: 0.5,
+      sustain: 0.2,
+      release: 0.1,
+    },
+    oscillator: {
+      type: 'triangle',
+    },
+    volume: -28,
+  }).toMaster()
+);
 
 export const getChord = (root) => {
   const note = new Octavian.Note(root);

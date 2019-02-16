@@ -4,18 +4,16 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import phrases from '../utils/words';
 
-const getAnimation = (duration = 2) => `stretch ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2;`;
+const getAnimation = (duration = 5) => `stretch ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2;`;
 
 const getAnimationDelays = () => {
   let result = '';
   for (let i = 0; i < 6; i += 1) {
     const r = Math.floor(Math.random() * 6);
-    result += `&:nth-of-type(${r}) {animation-delay: ${r * 0.25}s }`;
+    result += `&:nth-of-type(${r}) {animation-delay: ${r * 0.5}s }`;
   }
   return result;
 };
-
-// const getFontSize = () => Math.floor(Math.random() * 50);
 
 const FlickerWrapper = styled.div`
   font: 300 50px/1 Alegreya Sans, monospace;
@@ -25,7 +23,7 @@ const FlickerWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(#1a1a1a, #000);
+  background: radial-gradient(#65999933, #f4791f33);
 
   @keyframes stretch {
     5% {
@@ -42,7 +40,8 @@ const FlickerWrapper = styled.div`
 const FlickerH1 = styled.h1`
   white-space: nowrap;
   color: whitesmoke;
-  font-size: 80px;
+  font-size: 30px;
+  opacity: 0.6;
   animation: ${props => getAnimation(props.duration)};
 `;
 
