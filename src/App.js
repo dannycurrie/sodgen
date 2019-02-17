@@ -6,6 +6,7 @@ import WithTrigger from './components/WithTrigger';
 import { sounds } from './utils/sounds';
 import Flicker from './components/Flicker';
 import BackgroundImg from './components/BackgroundImg';
+import colours from './utils/colours';
 
 const Background = styled.div`
   top: 0;
@@ -15,7 +16,7 @@ const Background = styled.div`
   position: absolute;
   height: 100%;
   background-size: 200% 200%;
-  background-image: linear-gradient(45deg, #f4791fdd, #659999dd);
+  background-image: linear-gradient(45deg, ${colours.themeOne}dd, ${colours.themeTwo}dd);
   transform-origin: center;
 
   animation: Gradient 100s ease infinite;

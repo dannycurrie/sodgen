@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import phrases from '../utils/words';
+import colours from '../utils/colours';
 
 const getAnimation = (duration = 5) => `stretch ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2;`;
 
@@ -23,7 +24,7 @@ const FlickerWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(#65999933, #f4791f33);
+  background: radial-gradient(${colours.themeTwo}33, ${colours.themeOne}33);
 
   @keyframes stretch {
     5% {
