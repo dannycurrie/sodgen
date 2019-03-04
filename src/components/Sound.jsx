@@ -33,6 +33,7 @@ const Sound = ({
 Sound.propTypes = {
   soundId: PropTypes.string,
   play: PropTypes.bool,
+  // eslint-disable-next-line
   options: PropTypes.any,
   baseSound: PropTypes.bool,
   notifyLoaded: PropTypes.func,

@@ -55,20 +55,18 @@ const FlickerSpan = styled.span`
 
 const renderFlickerSpan = () => <FlickerSpan>{phrases()}</FlickerSpan>;
 
-const Flicker = props => (
+const Flicker = ({ soundId }) => (
   <FlickerWrapper>
-    {R.complement(R.isNil)(props.soundId) ? <FlickerH1>{renderFlickerSpan()}</FlickerH1> : null}
+    {R.complement(R.isNil)(soundId) ? <FlickerH1>{renderFlickerSpan()}</FlickerH1> : null}
   </FlickerWrapper>
 );
 
 Flicker.propTypes = {
   soundId: PropTypes.string,
-  duration: PropTypes.number,
 };
 
 Flicker.defaultProps = {
   soundId: null,
-  duration: 2,
 };
 
 export default Flicker;

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import Loading from './components/Loading';
 import Sound from './components/Sound';
 import NoteContainer from './components/NoteContainer';
 import WithTrigger from './components/WithTrigger';
@@ -125,7 +126,7 @@ const App = ({ loaded, soundLoaded }) => (
         </Background2>
       </Fragment>
     ) : (
-      <div>Loading</div>
+      <Loading />
     )}
   </Fragment>
 );
