@@ -9,11 +9,7 @@ const WithTrigger = ({ children, ...rest }) => (
 );
 
 WithTrigger.propTypes = {
-  children: PropTypes.node,
-};
-
-WithTrigger.defaulProps = {
-  children: [],
+  children: PropTypes.node.isRequired,
 };
 
 const mapStateToProps = state => ({

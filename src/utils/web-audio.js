@@ -7,7 +7,7 @@ const getAudioContext = () => {
   return ctx;
 };
 
-export default (audioURL, opts = {}) => new Promise((resolve) => {
+const getRequest = (audioURL, opts, resolve, start) => {
   const soundReq = new XMLHttpRequest();
   soundReq.open('GET', audioURL, true);
   soundReq.responseType = 'arraybuffer';
@@ -21,9 +21,15 @@ export default (audioURL, opts = {}) => new Promise((resolve) => {
       if (opts.loop) {
         audioBufferSource.loop = true;
       }
-      audioBufferSource.start();
-      resolve();
+      if (start) {
+        audioBufferSource.start();
+        resolve();
+      } else {
+        resolve(() => audioBufferSource.start());
+      }
     });
   };
-  soundReq.send();
-});
+  return soundReq;
+};
+
+export default (audioURL, opts = {}, start = true) => new Promise(resolve => getRequest(audioURL, opts, resolve, start).send());
