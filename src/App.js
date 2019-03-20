@@ -7,6 +7,7 @@ import WithTrigger from './components/WithTrigger';
 import { sounds, getSound } from './utils/sounds';
 import Flicker from './components/Flicker';
 import BackgroundImg from './components/BackgroundImg';
+import PlayButton from './components/PlayButton';
 import colours from './utils/colours';
 import requestSound from './utils/web-audio';
 
@@ -18,11 +19,7 @@ const Background = styled.div`
   position: absolute;
   height: 100%;
   background-size: 200% 200%;
-  background-image: linear-gradient(
-    45deg,
-    ${colours.themeOne}dd,
-    ${colours.themeTwo}dd
-  );
+  background-image: linear-gradient(45deg, ${colours.themeOne}dd, ${colours.themeTwo}dd);
   transform-origin: center;
 
   animation: Gradient 100s ease infinite;
@@ -54,38 +51,37 @@ const Background2 = styled.div`
 
 const App = () => {
   const [loaded, setLoaded] = useState(false);
+  const [baseSounds, setBaseSounds] = useState([]);
+  const [play, setPlay] = useState(false);
 
-  const baseSounds = [sounds.drone, sounds.synthline];
+  const baseSoundIds = [sounds.drone, sounds.synthline];
 
   useEffect(() => {
     const fetchBaseSounds = async () => {
-      const urls = baseSounds.reduce((acc, id) => [...acc, getSound(id)], []);
+      const urls = baseSoundIds.reduce((acc, id) => [...acc, getSound(id)], []);
 
       const requests = urls.reduce(
         (acc, url) => [...acc, requestSound(url, { loop: true }, false)],
         []
       );
 
-      Promise.all(requests).then((audios) => {
-        audios.forEach(audio => audio());
+      Promise.all(requests).then((results) => {
+        setBaseSounds(results);
         setLoaded(true);
       });
     };
     fetchBaseSounds();
   }, []);
 
+  const playBaseSounds = () => {
+    baseSounds.forEach(sound => sound());
+    setPlay(true);
+  };
+
   return (
     <Fragment>
       {loaded ? (
         <Fragment>
-          {/* triggered sounds */}
-          <WithTrigger>
-            <Sound soundId="" />
-          </WithTrigger>
-
-          {/* synth */}
-          <NoteContainer />
-
           {/* background images */}
           <Background className="App" />
 
@@ -126,11 +122,23 @@ const App = () => {
             baseOpactiy={0.3}
           />
 
-          <Background2>
-            <WithTrigger>
-              <Flicker />
-            </WithTrigger>
-          </Background2>
+          {/* Sounds and Animation */}
+          {play ? (
+            <Background2>
+              {/* triggered sounds */}
+              <WithTrigger>
+                <Sound soundId="" />
+              </WithTrigger>
+
+              {/* synth */}
+              <NoteContainer />
+              <WithTrigger>
+                <Flicker />
+              </WithTrigger>
+            </Background2>
+          ) : (
+            <PlayButton play={playBaseSounds} />
+          )}
         </Fragment>
       ) : (
         <Loading />
