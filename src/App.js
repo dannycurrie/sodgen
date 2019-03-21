@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import Loading from './components/Loading';
 import Sound from './components/Sound';
 import NoteContainer from './components/NoteContainer';
@@ -11,6 +13,9 @@ import PlayButton from './components/PlayButton';
 import colours from './utils/colours';
 import requestSound from './utils/web-audio';
 
+// icon for play button
+library.add(faPlay);
+
 const Background = styled.div`
   top: 0;
   bottom: 0;
@@ -19,7 +24,11 @@ const Background = styled.div`
   position: absolute;
   height: 100%;
   background-size: 200% 200%;
-  background-image: linear-gradient(45deg, ${colours.themeOne}dd, ${colours.themeTwo}dd);
+  background-image: linear-gradient(
+    45deg,
+    ${colours.themeOne}dd,
+    ${colours.themeTwo}dd
+  );
   transform-origin: center;
 
   animation: Gradient 100s ease infinite;
