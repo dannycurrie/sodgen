@@ -24,11 +24,7 @@ const Background = styled.div`
   position: absolute;
   height: 100%;
   background-size: 200% 200%;
-  background-image: linear-gradient(
-    45deg,
-    ${colours.themeOne}dd,
-    ${colours.themeTwo}dd
-  );
+  background-image: linear-gradient(45deg, ${colours.themeOne}dd, ${colours.themeTwo}dd);
   transform-origin: center;
 
   animation: Gradient 100s ease infinite;
@@ -63,7 +59,7 @@ const App = () => {
   const [baseSounds, setBaseSounds] = useState([]);
   const [play, setPlay] = useState(false);
 
-  const baseSoundIds = [sounds.drone, sounds.synthline];
+  const baseSoundIds = [sounds.drone]; // , sounds.synthline];
 
   useEffect(() => {
     const fetchBaseSounds = async () => {
