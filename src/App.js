@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faHome, faMusic } from '@fortawesome/free-solid-svg-icons';
 import Loading from './components/Loading';
 import Sound from './components/Sound';
 import NoteContainer from './components/NoteContainer';
@@ -12,9 +12,10 @@ import BackgroundImg from './components/BackgroundImg';
 import PlayButton from './components/PlayButton';
 import colours from './utils/colours';
 import requestSound from './utils/web-audio';
+import Links from './components/Links';
 
 // icon for play button
-library.add(faPlay);
+library.add(faPlay, faHome, faMusic);
 
 const Background = styled.div`
   top: 0;
@@ -52,6 +53,12 @@ const Background2 = styled.div`
   left: 0;
   position: absolute;
   height: 100%;
+`;
+
+const LinksWrapper = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 20px;
 `;
 
 const App = () => {
@@ -148,6 +155,9 @@ const App = () => {
       ) : (
         <Loading />
       )}
+      <LinksWrapper>
+        <Links />
+      </LinksWrapper>
     </Fragment>
   );
 };

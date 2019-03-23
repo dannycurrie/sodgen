@@ -40,7 +40,7 @@ const FlickerWrapper = styled.div`
 
 const FlickerH1 = styled.h1`
   white-space: nowrap;
-  color: whitesmoke;
+  color: ${colours.textColour};
   font-size: 30px;
   opacity: 0.6;
   animation: ${props => getAnimation(props.duration)};

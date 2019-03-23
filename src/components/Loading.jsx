@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import Loader from "react-loader-spinner";
-import colours from "../utils/colours";
+import React from 'react';
+import styled from 'styled-components';
+import Loader from 'react-loader-spinner';
+import colours from '../utils/colours';
 
 const LoadingWrapper = styled.div`
   font: 300 30px/1 Alegreya Sans, monospace;
@@ -16,7 +16,7 @@ const LoadingWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: radial-gradient(${colours.themeTwo}33, ${colours.themeOne}33);
-  color: whitesmoke;
+  color: ${colours.textColour}88;
 `;
 
 export default () => (
