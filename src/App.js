@@ -59,7 +59,7 @@ const App = () => {
   const [baseSounds, setBaseSounds] = useState([]);
   const [play, setPlay] = useState(false);
 
-  const baseSoundIds = [sounds.drone]; // , sounds.synthline];
+  const baseSoundIds = [sounds.drone, sounds.synthline];
 
   useEffect(() => {
     const fetchBaseSounds = async () => {
