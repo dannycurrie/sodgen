@@ -1,3 +1,9 @@
+## About
+
+A generative ambient music piece based on a the Jack Kerouac poem [sea](https://shockofdaylight.bandcamp.com/track/firstlight-i)
+
+Music is from an original track from [Shock of Daylight](https://shockofdaylight.bandcamp.com/track/firstlight-i)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
