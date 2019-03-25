@@ -11,7 +11,8 @@ const getAnimationDelays = () => {
   let result = '';
   for (let i = 0; i < 6; i += 1) {
     const r = Math.floor(Math.random() * 6);
-    result += `&:nth-of-type(${r}) {animation-delay: ${r * 0.5}s }`;
+    const duration = r >= 2 ? r : 2;
+    result += `&:nth-of-type(${r}) {animation-delay: ${duration}s }`;
   }
   return result;
 };

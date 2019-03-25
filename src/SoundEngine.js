@@ -46,7 +46,12 @@ export default (store) => {
       );
     }
     // clear sound after random duration
-    setTimeout(() => playSound(''), Math.random() * 3000);
+    const duration = R.pipe(
+      () => Math.random() * 3000,
+      R.ifElse(R.gte(1000), () => 1000, R.identity)
+    )();
+
+    setTimeout(() => playSound(''), duration);
   };
 
   const init = () => {
