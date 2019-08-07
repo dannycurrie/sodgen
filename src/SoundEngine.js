@@ -5,6 +5,9 @@ import { sounds } from './utils/sounds';
 import dataFeed from './data-feed';
 
 const curriedNormalize = (min, max) => values => normalize(values, min, max);
+// identfies the value we want from the data
+const dataLens = R.lensProp('price');
+const formatData = R.view(dataLens);
 
 /**
  * Function which generates actions to trigger sounds
@@ -55,7 +58,12 @@ export default (store) => {
   };
 
   const init = () => {
-    dataFeed().subscribe(res => play(res.price));
+    dataFeed().subscribe(
+      R.pipe(
+        formatData,
+        play
+      )
+    );
   };
 
   return {
