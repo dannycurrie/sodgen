@@ -24,29 +24,29 @@ export default (store) => {
   const playSound = soundId => store.dispatch(playSoundAction(soundId));
   const playNotes = noteIds => store.dispatch(playNoteAction(noteIds));
   const triggerableSounds = R.drop(2, R.keys(sounds));
+  const randomIndex = R.pipe(
+    () => Math.random() * triggerableSounds.length,
+    Math.floor
+  );
+  const randomSound = () => sounds[triggerableSounds[randomIndex()]];
+  const getNote = R.pipe(
+    R.takeLast(5),
+    normalizeNotes,
+    R.map(Math.floor),
+    R.head,
+    R.toString
+  );
 
   const play = (data) => {
     console.log(data);
     if (typeof data === 'undefined') return;
-    // play chord from normailised data
     dataStore.push(data);
 
     // randomly play either trigger sound or notes
     if (Math.random() > 0.4) {
-      // play random sound from triggerable sounds
-      const i = Math.floor(Math.random() * triggerableSounds.length);
-      playSound(sounds[triggerableSounds[i]]);
+      playSound(randomSound());
     } else {
-      // take last 5 data values normalise to get a note id
-      playNotes(
-        R.compose(
-          R.toString,
-          R.head,
-          R.map(Math.floor),
-          normalizeNotes,
-          R.takeLast(5)
-        )(dataStore)
-      );
+      playNotes(getNote(dataStore));
     }
     // clear sound after random duration
     const duration = R.pipe(
