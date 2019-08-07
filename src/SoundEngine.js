@@ -55,7 +55,7 @@ export default (store) => {
   };
 
   const init = () => {
-    dataFeed(play);
+    dataFeed().subscribe(res => play(res.price));
   };
 
   return {

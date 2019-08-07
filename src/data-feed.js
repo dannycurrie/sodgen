@@ -1,3 +1,5 @@
+import { webSocket } from 'rxjs/webSocket';
+
 const wsFeedURL = 'wss://ws-feed.gdax.com';
 const subscribe = {
   type: 'subscribe',
@@ -9,15 +11,8 @@ const subscribe = {
   ],
 };
 
-export default (callback) => {
-  const ws = new WebSocket(wsFeedURL);
-
-  ws.onopen = () => {
-    ws.send(JSON.stringify(subscribe));
-  };
-
-  ws.onmessage = (e) => {
-    const value = JSON.parse(e.data).last_size;
-    callback(value);
-  };
+export default () => {
+  const subject = webSocket(wsFeedURL);
+  subject.next(subscribe);
+  return subject;
 };
