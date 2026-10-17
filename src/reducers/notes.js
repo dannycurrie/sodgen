@@ -1,5 +1,4 @@
-import { equals, any, assoc } from 'ramda';
-import { PLAY_NOTE } from '../actions';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [
   // define the notes we want to play here
@@ -14,17 +13,20 @@ const initialState = [
   { id: '8', play: false, value: 'E6' },
 ];
 
-const idMatch = ({ id }) => any(equals(id));
-const playTrue = s => assoc('play', true, s);
-const playFalse = s => assoc('play', false, s);
+const notesSlice = createSlice({
+  name: 'notes',
+  initialState,
+  reducers: {
+    // accepts a single note id, or any iterable of note ids
+    playNote(state, action) {
+      const ids = new Set(Array.from(action.payload ?? []));
+      state.forEach((note) => {
+        note.play = ids.has(note.id);
+      });
+    },
+  },
+});
 
-const playNotes = ids => state => state.map(s => (idMatch(s)(ids) ? playTrue(s) : playFalse(s)));
+export const { playNote } = notesSlice.actions;
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case PLAY_NOTE:
-      return playNotes(action.ids)(state);
-    default:
-      return state;
-  }
-};
+export default notesSlice.reducer;

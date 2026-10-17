@@ -1,29 +1,10 @@
-import React, { PureComponent, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Note from './Note';
 
-class NoteContainer extends PureComponent {
-  render() {
-    const { notes } = this.props;
-    return (
-      <Fragment>
-        {notes.map(note => (
-          <Fragment key={note.id}>
-            <Note note={note} />
-          </Fragment>
-        ))}
-      </Fragment>
-    );
-  }
-}
+const NoteContainer = () => {
+  const notes = useSelector((state) => state.notes);
 
-NoteContainer.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  return notes.map((note) => <Note key={note.id} note={note} />);
 };
 
-const mapStateToProps = state => ({
-  notes: state.notes,
-});
-
-export default connect(mapStateToProps)(NoteContainer);
+export default NoteContainer;

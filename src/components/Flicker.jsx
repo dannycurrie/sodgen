@@ -1,11 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import * as R from 'ramda';
+import styled, { css, keyframes } from 'styled-components';
 import phrases from '../utils/words';
 import colours from '../utils/colours';
 
-const getAnimation = (duration = 5) => `stretch ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2;`;
+const stretch = keyframes`
+  5% {
+    transform: scaleX(5000);
+    opacity: 0.1;
+  }
+  15% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+`;
+
+const getAnimation = (duration = 5) => css`
+  ${stretch} ${Math.random() * duration}s cubic-bezier(0.4, 1.4, 0.75, 0.9) 2
+`;
 
 const getAnimationDelays = () => {
   let result = '';
@@ -18,7 +28,9 @@ const getAnimationDelays = () => {
 };
 
 const FlickerWrapper = styled.div`
-  font: 300 50px/1 Alegreya Sans, monospace;
+  font:
+    300 50px/1 Alegreya Sans,
+    monospace;
   height: 100%;
   overflow: hidden;
   user-select: none;
@@ -26,17 +38,6 @@ const FlickerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: radial-gradient(${colours.themeTwo}33, ${colours.themeOne}33);
-
-  @keyframes stretch {
-    5% {
-      transform: scaleX(5000);
-      opacity: 0.1;
-    }
-    15% {
-      transform: scaleX(1);
-      opacity: 1;
-    }
-  }
 `;
 
 const FlickerH1 = styled.h1`
@@ -44,7 +45,7 @@ const FlickerH1 = styled.h1`
   color: ${colours.textColour};
   font-size: 30px;
   opacity: 0.6;
-  animation: ${props => getAnimation(props.duration)};
+  animation: ${(props) => getAnimation(props.$duration)};
 `;
 
 const FlickerSpan = styled.span`
@@ -54,20 +55,14 @@ const FlickerSpan = styled.span`
   ${getAnimationDelays()}
 `;
 
-const renderFlickerSpan = () => <FlickerSpan>{phrases()}</FlickerSpan>;
-
-const Flicker = ({ soundId }) => (
+const Flicker = ({ soundId = null, duration }) => (
   <FlickerWrapper>
-    {R.complement(R.isNil)(soundId) ? <FlickerH1>{renderFlickerSpan()}</FlickerH1> : null}
+    {soundId != null ? (
+      <FlickerH1 $duration={duration}>
+        <FlickerSpan>{phrases()}</FlickerSpan>
+      </FlickerH1>
+    ) : null}
   </FlickerWrapper>
 );
-
-Flicker.propTypes = {
-  soundId: PropTypes.string,
-};
-
-Flicker.defaultProps = {
-  soundId: null,
-};
 
 export default Flicker;

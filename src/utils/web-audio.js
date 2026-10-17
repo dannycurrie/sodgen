@@ -7,29 +7,43 @@ const getAudioContext = () => {
   return ctx;
 };
 
-const getRequest = (audioURL, opts, resolve, start) => {
-  const soundReq = new XMLHttpRequest();
-  soundReq.open('GET', audioURL, true);
-  soundReq.responseType = 'arraybuffer';
+/**
+ * Browsers start an AudioContext in the `suspended` state until the user
+ * interacts with the page, so this has to be called from a user gesture.
+ */
+export const resumeAudio = async () => {
   const context = getAudioContext();
-  soundReq.onload = () => {
-    context.decodeAudioData(soundReq.response).then((data) => {
-      const audioBuffer = data;
-      const audioBufferSource = context.createBufferSource();
-      audioBufferSource.buffer = audioBuffer;
-      audioBufferSource.connect(context.destination);
-      if (opts.loop) {
-        audioBufferSource.loop = true;
-      }
-      if (start) {
-        audioBufferSource.start();
-        resolve();
-      } else {
-        resolve(() => audioBufferSource.start());
-      }
-    });
-  };
-  return soundReq;
+  if (context.state !== 'running') {
+    await context.resume();
+  }
 };
 
-export default (audioURL, opts = {}, start = true) => new Promise(resolve => getRequest(audioURL, opts, resolve, start).send());
+// sounds are triggered repeatedly, so each file is only fetched and decoded once
+const buffers = new Map();
+
+const loadBuffer = (audioURL) => {
+  if (!buffers.has(audioURL)) {
+    const buffer = fetch(audioURL)
+      .then((response) => response.arrayBuffer())
+      .then((data) => getAudioContext().decodeAudioData(data));
+    buffers.set(audioURL, buffer);
+  }
+  return buffers.get(audioURL);
+};
+
+/**
+ * Plays a sound, or - when `start` is false - resolves with a function that
+ * plays it later (a buffer source can only be started once).
+ */
+export default async (audioURL, opts = {}, start = true) => {
+  const context = getAudioContext();
+  const source = context.createBufferSource();
+  source.buffer = await loadBuffer(audioURL);
+  source.loop = Boolean(opts.loop);
+  source.connect(context.destination);
+
+  if (!start) return () => source.start();
+
+  source.start();
+  return undefined;
+};

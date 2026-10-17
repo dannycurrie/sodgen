@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faMusic } from '@fortawesome/free-solid-svg-icons';
 import colours from '../utils/colours';
 
 const StyledLinks = styled.div`
-  font: 14px Alegreya Sans, monospace;
+  font:
+    14px Alegreya Sans,
+    monospace;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -28,7 +30,7 @@ const StyledLinks = styled.div`
 `;
 
 const Links = () => (
-  <Fragment>
+  <>
     <StyledLinks>
       <iframe
         title="Follow on Spotify"
@@ -37,15 +39,14 @@ const Links = () => (
         height="25"
         scrolling="no"
         frameBorder="0"
-        allowTransparency="true"
       />
     </StyledLinks>
     <StyledLinks>
       <a href="https://shockofdaylight.bandcamp.com/" target="blank">
-        <FontAwesomeIcon icon="music" />
+        <FontAwesomeIcon icon={faMusic} />
       </a>
       <a href="http://shockofdaylight.com/" target="blank">
-        <FontAwesomeIcon icon="home" />
+        <FontAwesomeIcon icon={faHome} />
       </a>
     </StyledLinks>
     <StyledLinks>
@@ -53,6 +54,7 @@ const Links = () => (
         About
       </a>
     </StyledLinks>
-  </Fragment>
+  </>
 );
+
 export default Links;
