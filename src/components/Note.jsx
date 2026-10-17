@@ -1,22 +1,15 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { getSynth, getChord } from '../utils/notes';
 
-const Note = ({ note: { play, value } }) => {
-  if (play) {
-    const synth = getSynth();
-    const chord = getChord(value);
-    synth.triggerAttackRelease(chord, '2n');
-  }
+// the note object is replaced on every play action, so the effect re-runs
+// each time this note is triggered - even if it is the same note twice
+const Note = ({ note }) => {
+  useEffect(() => {
+    if (!note.play) return;
+    getSynth().triggerAttackRelease(getChord(note.value), '2n');
+  }, [note]);
 
-  return <Fragment />;
-};
-
-Note.propTypes = {
-  note: PropTypes.shape({
-    play: PropTypes.bool.isRequired,
-    note: PropTypes.string.isRequired,
-  }).isRequired,
+  return null;
 };
 
 export default Note;

@@ -1,7 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlay, faHome, faMusic } from '@fortawesome/free-solid-svg-icons';
 import Loading from './components/Loading';
 import Sound from './components/Sound';
 import NoteContainer from './components/NoteContainer';
@@ -11,11 +9,11 @@ import Flicker from './components/Flicker';
 import BackgroundImg from './components/BackgroundImg';
 import PlayButton from './components/PlayButton';
 import colours from './utils/colours';
-import requestSound from './utils/web-audio';
+import requestSound, { resumeAudio } from './utils/web-audio';
+import { startTone } from './utils/notes';
 import Links from './components/Links';
 
-// icon for play button
-library.add(faPlay, faHome, faMusic);
+const baseSoundIds = [sounds.drone, sounds.synthline];
 
 const Background = styled.div`
   top: 0;
@@ -66,34 +64,38 @@ const App = () => {
   const [baseSounds, setBaseSounds] = useState([]);
   const [play, setPlay] = useState(false);
 
-  const baseSoundIds = [sounds.drone, sounds.synthline];
-
   useEffect(() => {
-    const fetchBaseSounds = async () => {
-      const urls = baseSoundIds.reduce((acc, id) => [...acc, getSound(id)], []);
+    let cancelled = false;
 
-      const requests = urls.reduce(
-        (acc, url) => [...acc, requestSound(url, { loop: true }, false)],
-        []
+    const fetchBaseSounds = async () => {
+      const urls = baseSoundIds.map((id) => getSound(id));
+      const results = await Promise.all(
+        urls.map((url) => requestSound(url, { loop: true }, false))
       );
 
-      Promise.all(requests).then((results) => {
-        setBaseSounds(results);
-        setLoaded(true);
-      });
+      if (cancelled) return;
+      setBaseSounds(results);
+      setLoaded(true);
     };
+
     fetchBaseSounds();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const playBaseSounds = () => {
-    baseSounds.forEach(sound => sound());
+  const playBaseSounds = async () => {
+    // both audio graphs have to be unlocked by a user gesture before playing
+    await Promise.all([resumeAudio(), startTone()]);
+    baseSounds.forEach((sound) => sound());
     setPlay(true);
   };
 
   return (
-    <Fragment>
+    <>
       {loaded ? (
-        <Fragment>
+        <>
           {/* background images */}
           <Background className="App" />
 
@@ -104,7 +106,7 @@ const App = () => {
             startY="10%"
             endY="0%"
             duration="150s"
-            baseOpactiy={0.2}
+            baseOpacity={0.2}
           />
           <BackgroundImg
             url="./bg.jpeg"
@@ -113,7 +115,7 @@ const App = () => {
             startY="50%"
             endY="10%"
             duration="120s"
-            baseOpactiy={0.4}
+            baseOpacity={0.4}
           />
           <BackgroundImg
             url="./bg.jpeg"
@@ -122,7 +124,7 @@ const App = () => {
             startY="30%"
             endY="5%"
             duration="90s"
-            baseOpactiy={0.4}
+            baseOpacity={0.4}
           />
           <BackgroundImg
             url="./bg2.jpeg"
@@ -131,7 +133,7 @@ const App = () => {
             startY="5%"
             endY="0%"
             duration="190s"
-            baseOpactiy={0.3}
+            baseOpacity={0.3}
           />
 
           {/* Sounds and Animation */}
@@ -151,14 +153,14 @@ const App = () => {
           ) : (
             <PlayButton play={playBaseSounds} />
           )}
-        </Fragment>
+        </>
       ) : (
         <Loading />
       )}
       <LinksWrapper>
         <Links />
       </LinksWrapper>
-    </Fragment>
+    </>
   );
 };
 

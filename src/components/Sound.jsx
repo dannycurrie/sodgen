@@ -1,32 +1,19 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import * as R from 'ramda';
-
+import { useEffect } from 'react';
 import { getSound } from '../utils/sounds';
-import getAudio from '../utils/web-audio';
+import playAudio from '../utils/web-audio';
 
-const playSound = (url, options) => getAudio(url, options);
+// stable default so the effect is not re-run on every render
+const noOptions = {};
 
-const Sound = ({ soundId, options }) => {
-  const soundURL = R.either(R.isNil, R.isEmpty)(soundId)
-    ? null
-    : getSound(soundId);
-  // if no sound, don't play
-  if (!soundURL) return <Fragment />;
+const Sound = ({ soundId = '', options = noOptions }) => {
+  useEffect(() => {
+    if (!soundId) return;
+    const soundURL = getSound(soundId);
+    // if no sound, don't play
+    if (soundURL) playAudio(soundURL, options);
+  }, [soundId, options]);
 
-  playSound(soundURL, options);
-  return <Fragment />;
-};
-
-Sound.propTypes = {
-  soundId: PropTypes.string,
-  // eslint-disable-next-line
-  options: PropTypes.any
-};
-
-Sound.defaultProps = {
-  soundId: '',
-  options: {},
+  return null;
 };
 
 export default Sound;

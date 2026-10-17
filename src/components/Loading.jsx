@@ -1,10 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
-import Loader from 'react-loader-spinner';
+import { Bars } from 'react-loader-spinner';
 import colours from '../utils/colours';
 
 const LoadingWrapper = styled.div`
-  font: 300 30px/1 Alegreya Sans, monospace;
+  font:
+    300 30px/1 Alegreya Sans,
+    monospace;
   top: 0;
   bottom: 0;
   right: 0;
@@ -19,8 +20,10 @@ const LoadingWrapper = styled.div`
   color: ${colours.textColour}88;
 `;
 
-export default () => (
+const Loading = () => (
   <LoadingWrapper>
-    <Loader type="Bars" color="whitesmoke" height="100" width="100" />
+    <Bars height={100} width={100} color="whitesmoke" ariaLabel="loading" />
   </LoadingWrapper>
 );
+
+export default Loading;

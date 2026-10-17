@@ -1,10 +1,11 @@
 import normalize from 'normalize-to-range';
 import * as R from 'ramda';
-import { playSound as playSoundAction, playNote as playNoteAction } from './actions';
+import { playNote as playNoteAction } from './reducers/notes';
+import { playSound as playSoundAction } from './reducers/sound';
 import { sounds } from './utils/sounds';
 import dataFeed from './data-feed';
 
-const curriedNormalize = (min, max) => values => normalize(values, min, max);
+const curriedNormalize = (min, max) => (values) => normalize(values, min, max);
 // identfies the value we want from the data
 const dataLens = R.lensProp('price');
 const formatData = R.view(dataLens);
@@ -21,24 +22,14 @@ export default (store) => {
   const min = 0;
   const max = store.getState().notes.length;
   const normalizeNotes = curriedNormalize(min, max);
-  const playSound = soundId => store.dispatch(playSoundAction(soundId));
-  const playNotes = noteIds => store.dispatch(playNoteAction(noteIds));
+  const playSound = (soundId) => store.dispatch(playSoundAction(soundId));
+  const playNotes = (noteIds) => store.dispatch(playNoteAction(noteIds));
   const triggerableSounds = R.drop(2, R.keys(sounds));
-  const randomIndex = R.pipe(
-    () => Math.random() * triggerableSounds.length,
-    Math.floor
-  );
+  const randomIndex = R.pipe(() => Math.random() * triggerableSounds.length, Math.floor);
   const randomSound = () => sounds[triggerableSounds[randomIndex()]];
-  const getNote = R.pipe(
-    R.takeLast(5),
-    normalizeNotes,
-    R.map(Math.floor),
-    R.head,
-    R.toString
-  );
+  const getNote = R.pipe(R.takeLast(5), normalizeNotes, R.map(Math.floor), R.head, R.toString);
 
   const play = (data) => {
-    console.log(data);
     if (typeof data === 'undefined') return;
     dataStore.push(data);
 
@@ -57,14 +48,8 @@ export default (store) => {
     setTimeout(() => playSound(''), duration);
   };
 
-  const init = () => {
-    dataFeed().subscribe(
-      R.pipe(
-        formatData,
-        play
-      )
-    );
-  };
+  // returns the subscription so the feed can be torn down by the caller
+  const init = () => dataFeed().subscribe(R.pipe(formatData, play));
 
   return {
     init,

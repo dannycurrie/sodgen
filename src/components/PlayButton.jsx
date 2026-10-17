@@ -1,7 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import colours from '../utils/colours';
 
 const StyledButton = styled.button`
@@ -33,13 +32,9 @@ const StyledButton = styled.button`
 `;
 
 const PlayButton = ({ play }) => (
-  <StyledButton onClick={play}>
-    <FontAwesomeIcon icon="play" />
+  <StyledButton type="button" onClick={play} aria-label="play">
+    <FontAwesomeIcon icon={faPlay} />
   </StyledButton>
 );
-
-PlayButton.propTypes = {
-  play: PropTypes.func.isRequired,
-};
 
 export default PlayButton;

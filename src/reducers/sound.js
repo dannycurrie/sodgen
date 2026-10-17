@@ -1,18 +1,20 @@
-import * as R from 'ramda';
-import { PLAY_SOUND } from '../actions';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   soundId: null,
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case PLAY_SOUND:
-      if (action.id) {
-        return R.assoc('soundId', action.id, state);
-      }
-      return R.assoc('soundId', null, state);
-    default:
-      return state;
-  }
-};
+const soundSlice = createSlice({
+  name: 'sound',
+  initialState,
+  reducers: {
+    // an empty id clears the currently playing sound
+    playSound(state, action) {
+      state.soundId = action.payload || null;
+    },
+  },
+});
+
+export const { playSound } = soundSlice.actions;
+
+export default soundSlice.reducer;

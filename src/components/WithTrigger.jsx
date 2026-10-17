@@ -1,19 +1,10 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { Children, cloneElement } from 'react';
+import { useSelector } from 'react-redux';
 
-const WithTrigger = ({ children, ...rest }) => (
-  <Fragment>
-    {React.Children.map(children, child => React.cloneElement(child, { ...rest, play: true }))}
-  </Fragment>
-);
+const WithTrigger = ({ children }) => {
+  const soundId = useSelector((state) => state.sound.soundId);
 
-WithTrigger.propTypes = {
-  children: PropTypes.node.isRequired,
+  return <>{Children.map(children, (child) => cloneElement(child, { soundId, play: true }))}</>;
 };
 
-const mapStateToProps = state => ({
-  soundId: state.sound.soundId,
-});
-
-export default connect(mapStateToProps)(WithTrigger);
+export default WithTrigger;

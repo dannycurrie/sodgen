@@ -4,47 +4,48 @@ A generative ambient music piece based on a the Jack Kerouac poem [sea](https://
 
 Music is from an original track from [Shock of Daylight](https://shockofdaylight.bandcamp.com/track/firstlight-i)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was originally bootstrapped with Create React App and now builds with
+[Vite](https://vite.dev/).
+
+## Requirements
+
+Node 20 or newer.
+
+```
+npm install
+```
 
 ## Available Scripts
 
-In the project directory, you can run:
+### `npm run dev`
 
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Runs the app in development mode with hot module replacement, and opens
+[http://localhost:3000](http://localhost:3000).
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the test suite once with [Vitest](https://vitest.dev/). Use `npm run test:watch`
+to keep it running against changes.
+
+### `npm run lint`
+
+Lints with ESLint (flat config in `eslint.config.js`) and checks formatting with Prettier.
+`npx eslint . --fix` fixes what it can. `npm run format` reformats `src`.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `dist` folder, minified and with hashed filenames.
+`npm run preview` serves that build locally.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### `npm run deploy`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds, then syncs `dist/` to S3.
 
-### `npm run eject`
+## How it works
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+A live Coinbase Exchange ticker feed (`src/data-feed.js`, over RxJS websockets) is read by
+`src/SoundEngine.js`, which turns each price into Redux actions - either a one-shot sample or
+a note for the Tone.js synth. Components subscribe to that state and play audio in effects:
+samples through the Web Audio API (`src/utils/web-audio.js`) and notes through Tone.js
+(`src/utils/notes.js`). Browsers keep audio locked until a user gesture, so both audio graphs
+are built lazily and unlocked when the play button is pressed.

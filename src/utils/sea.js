@@ -1526,4 +1526,4 @@ const sea = [
   '    in Old Brittany',
 ];
 
-export default () => sea.filter(line => line !== '');
+export default () => sea.filter((line) => line !== '');

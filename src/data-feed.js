@@ -1,6 +1,7 @@
 import { webSocket } from 'rxjs/webSocket';
 
-const wsFeedURL = 'wss://ws-feed.gdax.com';
+// gdax was retired - this is the current Coinbase Exchange market data feed
+const wsFeedURL = 'wss://ws-feed.exchange.coinbase.com';
 const subscribe = {
   type: 'subscribe',
   channels: [
